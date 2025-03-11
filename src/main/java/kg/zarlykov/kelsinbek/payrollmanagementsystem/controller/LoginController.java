@@ -1,13 +1,15 @@
 package kg.zarlykov.kelsinbek.payrollmanagementsystem.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/")
-public class MainController {
+@Controller
+@RequestMapping("/login")
+public class LoginController {
 
     @GetMapping
-    public String getIndex(){
-        return "index";
+    public String login() {
+        return "login";
     }
 }
