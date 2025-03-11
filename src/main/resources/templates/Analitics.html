@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Аналитика</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Стиль кнопки "Экспорт данных" */
+    .btn-primary {
+      background-color: #007bff;
+      color: #ffffff;
+      border: 1px solid #007bff;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+
+    /* Стиль таблиц */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table th, table td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    /* Подсветка аномальных расходов */
+    .anomalous {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .chart-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+
+    select, button {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Аналитика</h2>
+
+  <!-- Выбор месяца -->
+  <div>
+    <label for="month">Выберите месяц:</label>
+    <select id="month">
+      <option value="january">Январь</option>
+      <option value="february">Февраль</option>
+      <option value="march">Март</option>
+      <option value="april">Апрель</option>
+      <option value="may">Май</option>
+    </select>
+  </div>
+
+  <!-- Кнопка "Экспорт данных" -->
+  <button class="btn-primary" id="export-data">Экспорт данных</button>
+
+  <!-- Таблица затрат -->
+  <table>
+    <thead>
+    <tr>
+      <th>Общие затраты</th>
+      <th>Зарплаты</th>
+      <th>Налоги</th>
+      <th>Кол-во сотрудников</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>500,000 Сом</td>
+      <td>300,000 Сом</td>
+      <td>50,000 Сом</td>
+      <td>5</td>
+    </tr>
+    <tr class="anomalous">
+      <td>1,000,000 Сом</td> <!-- Аномальные затраты -->
+      <td>600,000 Сом</td>
+      <td>200,000 Сом</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>600,000 Сом</td>
+      <td>350,000 Сом</td>
+      <td>100,000 Сом</td>
+      <td>6</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- График затрат за год -->
+  <div class="chart-container">
+    <canvas id="expensesChart"></canvas>
+  </div>
+
+</div>
+
+<script>
+  // Генерация графика затрат за год
+  const ctx = document.getElementById('expensesChart').getContext('2d');
+  const expensesChart = new Chart(ctx, {
+    type: 'bar', // Столбчатый график
+    data: {
+      labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май'], // Месяцы
+      datasets: [{
+        label: 'Затраты',
+        data: [500000, 600000, 700000, 800000, 1000000], // Данные затрат
+        backgroundColor: '#007bff',
+        borderColor: '#0056b3',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top'
+        },
+        tooltip: {
+          mode: 'index',
+          intersect: false
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            autoSkip: true,
+            maxTicksLimit: 5
+          }
+        },
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // Обработчик для кнопки "Экспорт данных"
+  document.getElementById('export-data').addEventListener('click', function() {
+    alert("Данные экспортированы!");
+    // Логика для экспорта в Excel или PDF (можно интегрировать с сервером)
+  });
+</script>
+
+</body>
+</html>

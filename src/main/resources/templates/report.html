@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчёты</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Основной стиль кнопки */
+        .btn-primary {
+            background-color: #007bff;
+            color: #ffffff;
+            border: 1px solid #007bff;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-generate-report {
+            background-color: #28a745;
+            color: #ffffff;
+            border: 1px solid #28a745;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .btn-generate-report:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
+
+        .report-filters {
+            margin-bottom: 20px;
+        }
+
+        .report-filters label {
+            margin-right: 10px;
+        }
+
+        /* Стили для диаграмм */
+        .chart-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .download-link {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .download-link:hover {
+            background-color: #0056b3;
+        }
+
+        .notification {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Фильтры для отчётов -->
+    <div class="report-filters">
+        <label for="report-type">Тип отчёта:</label>
+        <select id="report-type">
+            <option value="tax">Налоговый</option>
+            <option value="social">Социальный</option>
+            <option value="general">Общий</option>
+        </select>
+
+        <button class="btn-generate-report" id="generateReport">Сформировать</button>
+    </div>
+
+    <!-- Уведомление о готовности отчёта -->
+    <div class="notification" id="reportNotification">
+        Отчёт готов. <a href="#" class="download-link" id="downloadReport">Скачать</a>
+    </div>
+
+    <!-- Диаграммы и отчёты -->
+    <div class="chart-container">
+        <canvas id="salaryChart"></canvas>
+    </div>
+
+    <!-- Суммарные данные -->
+    <div class="summary">
+        <div class="summary-item">
+            <strong>Общая сумма начислений:</strong>
+            <span>95,000 ₽</span>
+        </div>
+        <div class="summary-item">
+            <strong>Общая сумма выплат:</strong>
+            <span>50,000 ₽</span>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Данные для диаграммы
+    const data = {
+        labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь'],
+        datasets: [{
+            label: 'Начисления',
+            data: [50000, 60000, 55000, 70000, 80000, 85000],
+            borderColor: '#007bff',
+            backgroundColor: 'rgba(0, 123, 255, 0.2)',
+            borderWidth: 2,
+            fill: true
+        }, {
+            label: 'Выплаты',
+            data: [40000, 50000, 45000, 60000, 70000, 75000],
+            borderColor: '#28a745',
+            backgroundColor: 'rgba(40, 167, 69, 0.2)',
+            borderWidth: 2,
+            fill: true
+        }]
+    };
+
+    // Конфигурация диаграммы
+    const config = {
+        type: 'line',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        autoSkip: true,
+                        maxTicksLimit: 6
+                    }
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+
+    // Рендеринг диаграммы
+    const salaryChart = new Chart(
+        document.getElementById('salaryChart'),
+        config
+    );
+
+    // Обработка нажатия кнопки "Сформировать"
+    document.getElementById('generateReport').addEventListener('click', function () {
+        // Показываем уведомление
+        document.getElementById('reportNotification').style.display = 'block';
+    });
+</script>
+
+</body>
+</html>

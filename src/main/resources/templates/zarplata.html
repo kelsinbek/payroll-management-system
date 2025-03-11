@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Зарплата</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Основной стиль кнопки */
+        .btn-primary {
+            background-color: #007bff;
+            color: #ffffff;
+            border: 1px solid #007bff;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Стиль кнопки при наведении */
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        /* Стиль для кнопки рассчитать все */
+        .btn-calculate-all {
+            background-color: #28a745;
+            color: #ffffff;
+            border: 1px solid #28a745;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .btn-calculate-all:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
+
+        /* Таблица */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        /* Класс для строк, которые не были рассчитаны */
+        .not-calculated {
+            background-color: #f9d6d5;
+        }
+
+        /* Секция суммарных данных */
+        .summary {
+            margin-top: 20px;
+        }
+
+        .summary-item {
+            margin-bottom: 10px;
+        }
+
+        .summary-item strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Фильтры -->
+    <div class="filters">
+        <label for="employee">Выберите сотрудника:</label>
+        <select id="employee" aria-label="Выбор сотрудника">
+            <option value="employee1">Сотрудник 1</option>
+            <option value="employee2">Сотрудник 2</option>
+            <option value="employee3">Сотрудник 3</option>
+        </select>
+
+        <label for="month">Выберите месяц:</label>
+        <input type="month" id="month" name="month" aria-label="Выбор месяца">
+
+        <button class="btn-calculate-all" id="calculateAll">Рассчитать всё</button>
+    </div>
+
+    <!-- Таблица расчетов -->
+    <table class="salary-table">
+        <thead>
+        <tr>
+            <th>ФИО</th>
+            <th>Часы</th>
+            <th>Сверхурочные</th>
+            <th>Начислено</th>
+            <th>Выплачено</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Иванов И.И.</td>
+            <td>160</td>
+            <td>10</td>
+            <td>50,000 сом</td>
+            <td>50,000 сом</td>
+            <td><button class="btn-primary" aria-label="Рассчитать для Иванова">Рассчитать</button></td>
+        </tr>
+        <tr class="not-calculated">
+            <td>Петров П.П.</td>
+            <td>160</td>
+            <td>5</td>
+            <td>45,000 сом</td>
+            <td>0 сом</td>
+            <td><button class="btn-primary" aria-label="Рассчитать для Петрова">Рассчитать</button></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Суммарные данные -->
+    <div class="summary">
+        <div class="summary-item">
+            <strong>Общая сумма начислений:</strong>
+            <span>95,000 сом</span>
+        </div>
+        <div class="summary-item">
+            <strong>Общая сумма выплат:</strong>
+            <span>50,000 сом</span>
+        </div>
+    </div>
+
+</div>
+
+<script src="scripts.js"></script>
+</body>
+
+</html>

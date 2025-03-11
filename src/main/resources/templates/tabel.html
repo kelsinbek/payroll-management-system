@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Табели учета рабочего времени</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    input {
+      width: 60px;
+      text-align: center;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #38a3dc;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #215a88;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Табель учета рабочего времени</h2>
+
+<label for="employee">Сотрудник:</label>
+<select id="employee">
+  <option value="1">Иванов Иван</option>
+  <option value="2">Петров Петр</option>
+  <option value="3">Сидорова Анна</option>
+</select>
+
+<label for="month">Месяц:</label>
+<input type="month" id="month">
+
+<table>
+  <thead>
+  <tr>
+    <th>Дата</th>
+    <th>Часы работы</th>
+    <th>Сверхурочные</th>
+    <th>Больничные</th>
+    <th>Отпуск</th>
+  </tr>
+  </thead>
+  <tbody id="timesheet-body">
+  <!-- Дни месяца будут добавляться автоматически -->
+  </tbody>
+</table>
+
+<button onclick="saveTimesheet()">Сохранить</button>
+
+<script>
+  function generateTimesheet() {
+    let tbody = document.getElementById("timesheet-body");
+    tbody.innerHTML = ""; // Очищаем таблицу
+    let daysInMonth = 5; // Можно динамически менять
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      let row = document.createElement("tr");
+
+      row.innerHTML = `
+                    <td>${day}</td>
+                    <td><input type="number" value="8" min="0" max="12"></td>
+                    <td><input type="number" value="0" min="0" max="8"></td>
+                    <td><input type="number" value="0" min="0" max="8"></td>
+                    <td><input type="checkbox"></td>
+                `;
+
+      tbody.appendChild(row);
+    }
+  }
+
+  function saveTimesheet() {
+    alert("Табель сохранён!");
+  }
+
+  // Генерация данных при загрузке страницы
+  generateTimesheet();
+</script>
+
+</body>
+</html>

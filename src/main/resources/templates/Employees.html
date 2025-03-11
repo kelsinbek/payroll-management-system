@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Зарплата</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .btn-primary {
+      background-color: #28a745;
+      color: #ffffff;
+      border: 1px solid #28a745;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #218838;
+      border-color: #218838;
+    }
+
+    /* Стиль таблиц */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table th, table td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    .unpaid {
+      color: #dc3545;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Зарплата</h2>
+
+  <button class="btn-primary" id="download-salary">Скачать расчёт</button>
+
+  <!-- Таблица с зарплатными данными -->
+  <table>
+    <thead>
+    <tr>
+      <th>Месяц</th>
+      <th>Часы</th>
+      <th>Начислено</th>
+      <th>Выплачено</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>Январь</td>
+      <td>160</td>
+      <td>50,000 Сом</td>
+      <td class="unpaid">0 Сом</td> <!-- Неоплаченная сумма -->
+    </tr>
+    <tr>
+      <td>Февраль</td>
+      <td>160</td>
+      <td>45,000 Сом</td>
+      <td>45,000 Сом</td> <!-- Оплаченная сумма -->
+    </tr>
+    <tr>
+      <td>Март</td>
+      <td>160</td>
+      <td>55,000 Сом</td>
+      <td>55,000 Сом</td> <!-- Оплаченная сумма -->
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // Обработчик для кнопки "Скачать расчёт"
+  document.getElementById('download-salary').addEventListener('click', function() {
+    alert("Расчёт успешно скачан!");
+    // Логика для скачивания расчёта (можно подключить серверный скрипт)
+  });
+</script>
+
+</body>
+</html>
