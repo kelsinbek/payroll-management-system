@@ -9,10 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -54,37 +51,63 @@ public class WebSecurityConfig {
         return (request, response, authentication) -> {
             boolean isAdmin = authentication.getAuthorities().stream()
                     .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
-            boolean isUser = authentication.getAuthorities().stream()
-                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_CLIENT"));
+            boolean isEmployee = authentication.getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_EMPLOYEE"));
+            boolean isDirector = authentication.getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_DIRECTOR"));
+            boolean isManager = authentication.getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_MANAGER"));
+            boolean isAccounter = authentication.getAuthorities().stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ACCOUNTER"));
 
             if (isAdmin) {
-                response.sendRedirect("/admin");
-            } else if (isUser) {
-                response.sendRedirect("/user/home");
+                response.sendRedirect("/admin/home");
+            } else if (isDirector) {
+                response.sendRedirect("/director/home");
+            } else if (isManager) {
+                response.sendRedirect("/manager/home");
+            } else if (isAccounter) {
+                response.sendRedirect("/accounter/home");
+            } else if (isEmployee) {
+                response.sendRedirect("/employee/home");
             } else {
-                response.sendRedirect("/");
+                response.sendRedirect("/default");
             }
         };
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-
-        UserDetails user1 = User.withUsername("user")
-                .password("{noop}password")
-                .roles("USER")
-                .build();
-
         UserDetails admin = User.withUsername("admin")
                 .password("{noop}admin123")
-                .roles("ADMIN", "USER")
+                .roles("ADMIN")
                 .build();
 
-        manager.createUser(user1);
-        manager.createUser(admin);
+        UserDetails employee = User.withUsername("employee")
+                .password("{noop}emp456")
+                .roles("EMPLOYEE")
+                .build();
 
-        return manager;
+        UserDetails director = User.withUsername("director")
+                .password("{noop}dir789")
+                .roles("DIRECTOR")
+                .build();
+
+        UserDetails manager = User.withUsername("manager")
+                .password("{noop}man101")
+                .roles("MANAGER")
+                .build();
+
+        UserDetails accounter = User.withUsername("accounter")
+                .password("{noop}acc202")
+                .roles("ACCOUNTER")
+                .build();
+
+        InMemoryUserDetailsManager managerInstance = new InMemoryUserDetailsManager(
+                admin, employee, director, manager, accounter
+        );
+
+        return managerInstance;
     }
 
 //    @Bean

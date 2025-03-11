@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("/manager")
 public class ManagerController {
 
-    @GetMapping()
+    @GetMapping("/home")
     public String home() {
         return "manager/home";
     }
